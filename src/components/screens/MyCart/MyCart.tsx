@@ -47,7 +47,7 @@ export function MyCart({ navigation }: any) {
       <View style={styles.imageContainer}>
         <Image source={data.productImage} style={styles.image} />
       </View>
-      <View style={{ flex: 1, height: '100%', justifyContent: 'center' }}>
+      <View style={{ flex: 1, height: '100%', justifyContent: 'space-around' }}>
         <View style={styles.productNameContainer}>
           <Text style={styles.productName}>{data.productName}</Text>
           <View style={styles.prices}>
