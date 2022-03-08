@@ -42,8 +42,27 @@ export function MyCart({ navigation }: any) {
     setTotal(total);
   }
 
-  const renderProducts = (data: IItem, index: number): ReactElement => (
-    <TouchableOpacity key={data.id} style={styles.productsCart}>
+  const removeItemFromCart = async (id: number) => {
+    try {
+      let itemArray = await AsyncStorage.getItem('cartItem')
+      if (itemArray !== null) {
+        itemArray = JSON.parse(itemArray)
+        if (itemArray !== null) {
+          let array = [...itemArray]
+          for (let index = 0; index < array.length; index++) {
+            if (array[index].toString() == id.toString()) array.splice(index, 1)
+            await AsyncStorage.setItem('cartItems', JSON.stringify(array))
+            getDataFromDB()
+          }
+        }
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+
+  const renderProducts = (data: IItem): ReactElement => (
+    <TouchableOpacity onPress={() => navigation.navigate('ItemInfo', { itemId: data.id })} key={data.id} style={styles.productsCart}>
       <View style={styles.imageContainer}>
         <Image source={data.productImage} style={styles.image} />
       </View>
@@ -54,6 +73,20 @@ export function MyCart({ navigation }: any) {
             <Text style={{ fontSize: 14, fontWeight: '400', maxWidth: '85%', marginRight: 4 }}>&#36; {data.productPrice}</Text>
             <Text>(~&#36; {data.productPrice + data.productPrice / 20})</Text>
           </View>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={styles.minusIconContainer}>
+              <MaterialCommunityIcons name="minus" style={styles.signIcon} />
+            </View>
+            <Text>1</Text>
+            <View style={styles.plusIconContainer}>
+              <MaterialCommunityIcons name="plus" style={styles.signIcon} />
+            </View>
+          </View>
+          <TouchableOpacity onPress={() => removeItemFromCart(data.id)}>
+            <MaterialCommunityIcons name="delete-outline" style={styles.deleteIcon} />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
@@ -91,6 +124,7 @@ export function MyCart({ navigation }: any) {
             {typeof products === 'object' && products.map(renderProducts)}
           </View>
 
+          <View></View>
         </ScrollView>
 
       </View>

@@ -61,4 +61,32 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         opacity: .6,
     },
+    plusIconContainer: {
+        borderRadius: 100,
+        marginLeft: 20,
+        padding: 4,
+        borderWidth: 1,
+        borderColor: COLOURS.backgroundMedium,
+        opcity: .5,
+    },
+    minusIconContainer: {
+        borderRadius: 100,
+        marginRight: 20,
+        padding: 4,
+        borderWidth: 1,
+        borderColor: COLOURS.backgroundMedium,
+        opcity: .5,
+    },
+    signIcon: {
+        fontSize: 16,
+        color: COLOURS.backgroundDark,
+    },
+    deleteIcon: {
+        fontSize: 16,
+        color: COLOURS.backgroundDark,
+        backgroundColor: COLOURS.backgroundLight,
+        padding: 8,
+        borderRadius: 100,
+        overflow: 'hidden',
+    }
 })
